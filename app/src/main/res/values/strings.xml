@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Puzzledroid</string>
+    <string name="item_help">Ayuda</string>
+    <string name="btn_cerrar">Cerrar</string>
+    <string name="img_buton">Informacion</string>
+    <string name="item_playlist">PlayList</string>
+</resources>
