@@ -4,4 +4,7 @@
     <string name="btn_cerrar">Cerrar</string>
     <string name="img_buton">Informacion</string>
     <string name="item_playlist">PlayList</string>
+    <string name="autenticacionOK">Autenticación OK para el usuario</string>
+    <string name="autenticacionNOok">Autenticación NO OK</string>
+
 </resources>
