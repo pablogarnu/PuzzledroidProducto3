@@ -51,6 +51,7 @@ public class PuzzleList extends AppCompatActivity {
     private RadioButton rdblevel3;
     private int niveljuego;
     String midireccionfoto;
+    String idioma;
     private ArrayList<Integer> ImagesToQuit=new ArrayList<>();
 
     static final int REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE=2;
@@ -62,13 +63,16 @@ public class PuzzleList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        esmonojugador=getIntent().getExtras().getBoolean("esmonojugador");
+        mijugador=(Jugador)getIntent().getSerializableExtra("jugador_activo");
+        idioma=getIntent().getExtras().getString("idioma");
+
         setContentView(R.layout.activity_puzzle_list);
         radioGroupNiveles=findViewById(R.id.id_RdGrpupNiveles);
         rdblevel1=findViewById(R.id.id_rdblevel1);
         rdblevel2=findViewById(R.id.id_rdblevel2);
         rdblevel3=findViewById(R.id.id_rdblevel3);
-        esmonojugador=getIntent().getExtras().getBoolean("esmonojugador");
-        mijugador=(Jugador)getIntent().getSerializableExtra("jugador_activo");
+
         AssetManager assetManager=getAssets();
         GridView gridView=findViewById(R.id.gridImagenes);
 
@@ -85,6 +89,7 @@ public class PuzzleList extends AppCompatActivity {
                     Intent intent=new Intent(getApplicationContext(),ImageToSplit.class);
                     intent.putExtra("assetName",ficheros[position % ficheros.length]);
                     intent.putExtra("niveljuego", niveljuego);
+                    intent.putExtra("idioma",idioma);
 
                     //solo si es multijugador le pasa el objeto jugador
                     if(!esmonojugador) {
@@ -256,6 +261,7 @@ public class PuzzleList extends AppCompatActivity {
         if (codigoPedido == REQUEST_IMAGE_CAPTURE && codigoResultado == RESULT_OK  ) {
             Intent intent = new Intent(this, ImageToSplit.class);
             intent.putExtra("niveljuego", niveljuego);
+            intent.putExtra("idioma",idioma);
             //solo si es multijugador le pasa el objeto jugador
             if(!esmonojugador) {
                 intent.putExtra("jugador_activo", mijugador);
@@ -271,6 +277,7 @@ public class PuzzleList extends AppCompatActivity {
 
             Intent intent = new Intent(this, ImageToSplit.class);
             intent.putExtra("ImagenUri", getRandomImage());
+            intent.putExtra("idioma",idioma);
             //solo si es multijugador le pasa el objeto jugador
             if(!esmonojugador) {
                 intent.putExtra("jugador_activo", mijugador);

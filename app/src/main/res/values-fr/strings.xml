@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Puzzledroid</string>
+    <string name="item_help">Aide</string>
+    <string name="btn_cerrar">Fermer</string>
+    <string name="img_buton">Information</string>
+    <string name="item_playlist">Liste musique</string>
+    <string name="autenticacionOK">Authentification de l’utilisateur OK</string>
+    <string name="autenticacionNOok">Authentification de l’utilisateur  NE OK</string>
+    <string name="modojuego">MODE DE JEU</string>
+    <string name="records">Records</string>
+    <string name="listanickname">Alias</string>
+    <string name="listapuntos">Score</string>
+    <string name="listafecha">Date</string>
+    <string name="iniciosesion">CONNECTEZ-VOUS</string>
+    <string name="registrojugador">INSCRIVEZ-VOUS</string>
+    <string name="desconectar">DÉCONNECTER</string>
+    <string name="niveles">  Niveaux</string>
+    <string name="nivel1">Niveau1</string>
+    <string name="nivel2">Niveau2</string>
+    <string name="nivel3">Niveau3</string>
+    <string name="contraseñaregistro">Mot de passe</string>
+    <string name="btnguardar">ENREGISTRER</string>
+    <string name="msjServicioVinculado">Service lié</string>
+    <string name="msjfalloautenticacion">l\'authentification échoue</string>
+    <string name="msjcampologinvacio">Le champ login est vide</string>
+    <string name="msjusuarionoregistrado">Login incorrect ou utilisateur non enregistré</string>
+    <string name="msjnoexistejugador">Il n’y a pas de joueur avec ce login</string>
+    <string name="msjganaste">TU AS GAGNÉ</string>
+    <string name="msjregistrojugada">Les données du jeu ont été enregistrées</string>
+    <string name="msjregresarotrajugada">Cliquez sur le bouton retour pour sélectionner un autre puzzle ou un autre niveau</string>
+    <string name="msjmovimnovalido">Mouvement NON VALIDE</string>
+    <string name="menuIngles">Anglais</string>
+    <string name="menuFrances">Francais</string>
+    <string name="menuEspañol">Espagnol</string>
+
+</resources>

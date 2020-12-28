@@ -51,6 +51,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
     private EditText mylogin;
     private Button btnLogin;
     private Jugador mijugador;
+    private String idioma;
     //private static String loginPassword="admin";
 
     ConexionSQLite conexion;
@@ -61,16 +62,20 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
     private Button signoutButton;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent=getIntent();
+        idioma=intent.getExtras().getString("idioma");
+
         setContentView(R.layout.activity_login);
 
-        //conexion=new ConexionSQLite(getApplicationContext(),"bd_jugadores",null,1);
+        conexion=new ConexionSQLite(getApplicationContext(),"bd_jugadores",null,1);
 
-        //mylogin = (EditText) findViewById(R.id.edtLogin);
-        //btnLogin = (Button) findViewById(R.id.btnLogin);
-        //checkLogin();
+        mylogin = (EditText) findViewById(R.id.edtLogin);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        checkLogin();
         googleButton=(SignInButton)findViewById(R.id.sign_in_button);
         signoutButton=(Button)findViewById(R.id.singoutbutton);
         googleButton.setOnClickListener(this);
@@ -209,7 +214,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "La atenticación falló.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.msjfalloautenticacion), Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
 
@@ -229,17 +234,18 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 if (mylogin.getText().toString().trim().length()==0){
-                    Toast.makeText(getApplicationContext(), "El campo de login esta vacio", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.msjcampologinvacio), Toast.LENGTH_SHORT).show();
                 }else{
 
                     if (loginRegistrado()) {
                         mijugador=getMijugador(mylogin.getText().toString());
                         Intent intent = new Intent(loginActivity.this, PuzzleList.class);
+                        intent.putExtra("idioma",idioma);
                         intent.putExtra("jugador_activo",mijugador); // mandamos como parámetro el jugador que se ha logeado correctamente
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Login incorrecto o usuario no registrado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.msjusuarionoregistrado), Toast.LENGTH_SHORT).show();
                         mylogin.setText("");
                     }
                 }
@@ -256,6 +262,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
     public void activateRegistro(View view){
 
         Intent intent=new Intent(loginActivity.this,RegisterActivity.class);
+        intent.putExtra("idioma",idioma);
         startActivity(intent);
     }
 
@@ -295,7 +302,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
             mijugador = new Jugador(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
             cursor.close();
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),"No existe ningun jugador con ese login",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.msjnoexistejugador),Toast.LENGTH_SHORT).show();
         }
         db.close();
         return mijugador;

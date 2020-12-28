@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Puzzledroid</string>
+    <string name="item_help">Help</string>
+    <string name="btn_cerrar">Close</string>
+    <string name="img_buton">Information</string>
+    <string name="item_playlist">PlayList</string>
+    <string name="autenticacionOK">User Authentication OK</string>
+    <string name="autenticacionNOok">User Authentication NOT OK</string>
+    <string name="modojuego">GAME MODE</string>
+    <string name="records">Records</string>
+    <string name="listanickname">Nickname</string>
+    <string name="listapuntos">Score</string>
+    <string name="listafecha">Date</string>
+    <string name="iniciosesion">LOG IN</string>
+    <string name="registrojugador">REGISTRY</string>
+    <string name="desconectar">SIGN OUT</string>
+    <string name="niveles">  Levels</string>
+    <string name="nivel1">Level1</string>
+    <string name="nivel2">Level2</string>
+    <string name="nivel3">Level3</string>
+    <string name="contraseñaregistro">Password</string>
+    <string name="btnguardar">SAVE</string>
+    <string name="msjServicioVinculado">Service binded</string>
+    <string name="msjfalloautenticacion">Authentication failed</string>
+    <string name="msjcampologinvacio">Empty login field</string>
+    <string name="msjusuarionoregistrado">Incorrect login or user not registered</string>
+    <string name="msjnoexistejugador">No player with that log in name</string>
+    <string name="msjganaste">YOU WIN</string>
+    <string name="msjregistrojugada">Game data was registered</string>
+    <string name="msjregresarotrajugada">Click on the back button to select another puzzle or another level</string>
+    <string name="msjmovimnovalido">NOT VALID movement</string>
+    <string name="menuIngles">English</string>
+    <string name="menuFrances">French</string>
+    <string name="menuEspañol">Spanish</string>
+
+</resources>

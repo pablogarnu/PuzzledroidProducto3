@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="  Niveles"
+            android:text="@string/niveles"
             android:textSize="18sp" />
 
         <RadioButton
@@ -49,21 +49,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Nivel1" />
+            android:text="@string/nivel1" />
 
         <RadioButton
             android:id="@+id/id_rdblevel2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Nivel 2" />
+            android:text="@string/nivel2" />
 
         <RadioButton
             android:id="@+id/id_rdblevel3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Nivel3" />
+            android:text="@string/nivel3" />
 
     </RadioGroup>
 

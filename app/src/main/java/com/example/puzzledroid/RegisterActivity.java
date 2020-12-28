@@ -4,6 +4,7 @@ package com.example.puzzledroid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -22,12 +23,16 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText myedtnickname;
     private EditText myedtloginPassword;
     private Button mybutton;
+    private String idioma;
 
     ConexionSQLite conexion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent=getIntent();
+        idioma=intent.getExtras().getString("idioma");
+
         setContentView(R.layout.activity_register);
 
      myedtnickname=(EditText)findViewById(R.id.edtNickname);

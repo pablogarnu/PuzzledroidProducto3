@@ -73,6 +73,8 @@ public class Puzzle_view extends AppCompatActivity {
     private Boolean esmonojugador;
     private NotificationManagerCompat notificationManager;
     private int record;
+    private String idioma;
+
 
     public static ConexionSQLite conexion;
 
@@ -84,6 +86,14 @@ public class Puzzle_view extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle mibundle = this.getIntent().getExtras();
+        if (mibundle != null) {
+            mijugador = (Jugador) mibundle.getSerializable("jugador_activo");
+            niveljuego=mibundle.getInt("niveljuego");
+            esmonojugador=mibundle.getBoolean("esmonojugador");
+            idioma=mibundle.getString("idioma");
+
+        }
         setContentView(R.layout.activity_puzzle_view);
 
         record=getNewRecord();
@@ -93,12 +103,6 @@ public class Puzzle_view extends AppCompatActivity {
         notificationManager=NotificationManagerCompat.from(this);
 
 
-        Bundle mibundle = this.getIntent().getExtras();
-        if (mibundle != null) {
-            mijugador = (Jugador) mibundle.getSerializable("jugador_activo");
-            niveljuego=mibundle.getInt("niveljuego");
-            esmonojugador=mibundle.getBoolean("esmonojugador");
-        }
         try {
             convertFilesToBitmaps();
         } catch (FileNotFoundException e) {
@@ -129,26 +133,27 @@ public class Puzzle_view extends AppCompatActivity {
             ArrayList<Jugada> misjugadas = conexion.getListaJugadas();
             Jugada lastjugada = misjugadas.get(misjugadas.size() - 1);
             String contenido = mijugador.getNickname() + " puntos:" + lastjugada.getPuntos();
+            if (isResuelto()) {
+                // crear y mostrar notificacion
+                if (getNewRecord() > record) {
+                    record = getNewRecord();
+                    Notification notification = new NotificationCompat.Builder(this, CHANNEL_RECORDS_ID)
+                            .setSmallIcon(R.drawable.ic_baseline_notification_important_24)
+                            .setContentText(record + "")
+                            .setPriority(NotificationCompat.PRIORITY_HIGH)
+                            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                            .build();
+                    notificationManager.notify(1, notification);
+                }
 
-            // crear y mostrar notificacion
-           if (getNewRecord()>record){
-               record=getNewRecord();
-                Notification notification=new NotificationCompat.Builder(this,CHANNEL_RECORDS_ID)
-                    .setSmallIcon(R.drawable.ic_baseline_notification_important_24)
-                    .setContentText(record+"")
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                    .build();
-                notificationManager.notify(1,notification);
+                /*Cargar contenido en calendario mediante intent*/
+
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setData(CalendarContract.Events.CONTENT_URI);
+                intent.putExtra(CalendarContract.Events.TITLE, contenido);
+                intent.putExtra(CalendarContract.Events.ALL_DAY, true);
+                startActivity(intent);
             }
-
-            /*Cargar contenido en calendario mediante intent*/
-
-            Intent intent = new Intent(Intent.ACTION_INSERT);
-            intent.setData(CalendarContract.Events.CONTENT_URI);
-            intent.putExtra(CalendarContract.Events.TITLE, contenido);
-            intent.putExtra(CalendarContract.Events.ALL_DAY,true);
-            startActivity(intent);
         }
     }//End ondestroy
 
@@ -343,20 +348,20 @@ public class Puzzle_view extends AppCompatActivity {
         //soundPool.play(pieceMovementSound,1,1,0,0,1);
         display(context);
         if (isResuelto()) {
-            Toast.makeText(context, "YOU WIN", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, myGridview.getMsjganar(), Toast.LENGTH_SHORT).show();
             //Abrimos la base de datos
                 if(mijugador!=null) {
                     conexion = new ConexionSQLite(context, "bd_jugadores", null, 1);
                     // ver valor mayor de puntuación antes de insertar nuevo registro
                     gestionaSiguientePaso();
-                    Toast.makeText(context, "Se registraron los datos de la jugada", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, myGridview.getMsjRegistroJugada(), Toast.LENGTH_SHORT).show();
 
                 }
 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(context, "Haz click en el boton de regresar para seleccionar otro puzzle u otro nivel", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, myGridview.getMsjContinuaJugando(), Toast.LENGTH_LONG).show();
                 }
             },3000);
         } //end if
@@ -388,7 +393,7 @@ public class Puzzle_view extends AppCompatActivity {
             if (direccion.equals(left)) intercambiaPieza(context, posicion, -1);
             else if (direccion.equals(down)) intercambiaPieza(context, posicion, columnas);
             else if (direccion.equals(right)) intercambiaPieza(context, posicion, 1);
-            else Toast.makeText(context, "Movimiento NO VALIDO", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(context, getResources().getString(R.string.msjmovimnovalido), Toast.LENGTH_SHORT).show();
         }
 
             // Pieza situada en la esquina superior derecha de la matriz de piezas
@@ -397,7 +402,7 @@ public class Puzzle_view extends AppCompatActivity {
 
             if (direccion.equals(left))intercambiaPieza(context,posicion,-1);
             else if (direccion.equals(down))intercambiaPieza(context,posicion,columnas);
-            else Toast.makeText(context,"Movimiento NO VALIDO",Toast.LENGTH_SHORT).show();
+            else Toast.makeText(context,getResources().getString(R.string.msjmovimnovalido),Toast.LENGTH_SHORT).show();
         }
 
         // Pieza situadas en la columna izquierda de la matriz y en las filas intermedias
@@ -406,7 +411,7 @@ public class Puzzle_view extends AppCompatActivity {
             if (direccion.equals(right))intercambiaPieza(context,posicion,1);
             else if (direccion.equals(down))intercambiaPieza(context,posicion,columnas);
             else if (direccion.equals(up))intercambiaPieza(context,posicion,-columnas);
-            else Toast.makeText(context,"Movimiento NO VALIDO",Toast.LENGTH_SHORT).show();
+            else Toast.makeText(context,getResources().getString(R.string.msjmovimnovalido),Toast.LENGTH_SHORT).show();
         }
 
         // Pieza situadas en columna derecha y filas intermedias de la matriz de piezas
@@ -415,7 +420,7 @@ public class Puzzle_view extends AppCompatActivity {
             if (direccion.equals(left)) intercambiaPieza(context, posicion, -1);
             else if (direccion.equals(down))intercambiaPieza(context,posicion,columnas);
             else if (direccion.equals(up))intercambiaPieza(context,posicion,-columnas);
-            else Toast.makeText(context,"Movimiento NO VALIDO",Toast.LENGTH_SHORT).show();
+            else Toast.makeText(context,getResources().getString(R.string.msjmovimnovalido),Toast.LENGTH_SHORT).show();
         }
 
         // Pieza situada en la esquina inferior izquierda de la matriz de piezas
@@ -423,7 +428,7 @@ public class Puzzle_view extends AppCompatActivity {
         else if (posicion==dimensiones-columnas){
             if (direccion.equals(right))intercambiaPieza(context,posicion,1);
             else if (direccion.equals(up))intercambiaPieza(context,posicion,-columnas);
-            else Toast.makeText(context,"Movimiento NO VALIDO",Toast.LENGTH_SHORT).show();
+            else Toast.makeText(context,getResources().getString(R.string.msjmovimnovalido),Toast.LENGTH_SHORT).show();
         }
 
         // Pieza situada en la fila inferior y las columnas intermedias de la matriz de piezas
@@ -432,7 +437,7 @@ public class Puzzle_view extends AppCompatActivity {
             if (direccion.equals(left)) intercambiaPieza(context, posicion, -1);
             else if (direccion.equals(up)) intercambiaPieza(context, posicion, -columnas);
             else if (direccion.equals(right)) intercambiaPieza(context, posicion, 1);
-            else Toast.makeText(context, "Movimiento NO VALIDO", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(context, getResources().getString(R.string.msjmovimnovalido), Toast.LENGTH_SHORT).show();
         }
 
         // Pieza situada en la esquina inferior derecha de la matriz de piezas
@@ -441,7 +446,7 @@ public class Puzzle_view extends AppCompatActivity {
 
             if (direccion.equals(left))intercambiaPieza(context,posicion,-1);
             else if (direccion.equals(up))intercambiaPieza(context,posicion,-columnas);
-            else Toast.makeText(context,"Movimiento NO VALIDO",Toast.LENGTH_SHORT).show();
+            else Toast.makeText(context,getResources().getString(R.string.msjmovimnovalido),Toast.LENGTH_SHORT).show();
         }
 
         // Pieza situadas en columnas y filas intermedias de la matriz de piezas

@@ -52,21 +52,25 @@ public class ImageToSplit extends AppCompatActivity {
     private String uriImagen;
     private String midireccionArchivoFoto;
     private String nombrefichero;
+    private String idioma;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_to_split);
-        final ConstraintLayout layout=findViewById(R.id.imagetosplit);
-        final ImageView myimage=findViewById(R.id.imgTosegment);
         Intent intent=getIntent();
+        idioma=intent.getExtras().getString("idioma");
         nombrefichero=intent.getStringExtra("assetName");
         mijugador=(Jugador)getIntent().getSerializableExtra("jugador_activo");
         niveljuego=getIntent().getExtras().getInt("niveljuego");
         esmonojugador=getIntent().getExtras().getBoolean("esmonojugador");
         uriImagen=getIntent().getStringExtra("ImagenUri");
         midireccionArchivoFoto=getIntent().getStringExtra("midireccionfoto");
+
+        setContentView(R.layout.activity_image_to_split);
+        final ConstraintLayout layout=findViewById(R.id.imagetosplit);
+        final ImageView myimage=findViewById(R.id.imgTosegment);
+
 
         try {
             loadProperImageSource(myimage);
@@ -109,6 +113,7 @@ public class ImageToSplit extends AppCompatActivity {
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("jugador_activo",mijugador);
                 bundle.putInt("niveljuego",niveljuego);
+                bundle.putString("idioma",idioma);
                 if(esmonojugador){
                     bundle.putBoolean("esmonojugador",true);
                 }

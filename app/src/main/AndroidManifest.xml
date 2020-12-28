@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".App"
@@ -20,16 +21,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListarRecords"></activity>
+        <activity android:name=".ListarRecords"
+            android:configChanges="locale"></activity>
         <activity android:name=".ImageToSplit" android:screenOrientation="portrait" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".loginActivity" />
-        <activity android:name=".PuzzleList" android:screenOrientation="portrait" />
-        <activity android:name=".Puzzle_view" android:screenOrientation="portrait" />
+        <activity android:name=".RegisterActivity"
+            android:configChanges="locale"/>
+        <activity android:name=".loginActivity"
+            android:configChanges="locale"/>
+        <activity android:name=".PuzzleList" android:screenOrientation="portrait"
+            android:configChanges="locale"/>
+        <activity android:name=".Puzzle_view" android:screenOrientation="portrait"
+            android:configChanges="locale"/>
         <activity android:name=".WebViewActivity" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:configChanges="locale"/>
         <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -3,8 +3,34 @@
     <string name="item_help">Ayuda</string>
     <string name="btn_cerrar">Cerrar</string>
     <string name="img_buton">Informacion</string>
-    <string name="item_playlist">PlayList</string>
+    <string name="item_playlist">Lista audios</string>
     <string name="autenticacionOK">Autenticación OK para el usuario</string>
     <string name="autenticacionNOok">Autenticación NO OK</string>
+    <string name="modojuego">MODO DE JUEGO</string>
+    <string name="records">Records</string>
+    <string name="listanickname">Alias</string>
+    <string name="listapuntos">Puntos</string>
+    <string name="listafecha">Fecha</string>
+    <string name="iniciosesion">INICIA SESIÓN</string>
+    <string name="registrojugador">REGISTRARSE</string>
+    <string name="desconectar">DESCONECTAR</string>
+    <string name="niveles">  Niveles</string>
+    <string name="nivel1">Nivel1</string>
+    <string name="nivel2">Nivel2</string>
+    <string name="nivel3">Nivel3</string>
+    <string name="contraseñaregistro">Contraseña</string>
+    <string name="btnguardar">GUARDAR</string>
+    <string name="msjServicioVinculado">Servicio vinculado</string>
+    <string name="msjfalloautenticacion">La autenticación falló</string>
+    <string name="msjcampologinvacio">El campo login está vacio</string>
+    <string name="msjusuarionoregistrado">Login incorrecto o usuario no registrado</string>
+    <string name="msjnoexistejugador">No existe ningun jugador con ese login</string>
+    <string name="msjganaste">GANASTE</string>
+    <string name="msjregistrojugada">Se registraron los datos de la jugada</string>
+    <string name="msjregresarotrajugada">Haz click en el boton de regresar para seleccionar otro puzzle u otro nivel</string>
+    <string name="msjmovimnovalido">Movimiento NO VALIDO</string>
+    <string name="menuIngles">Inglés</string>
+    <string name="menuFrances">Francés</string>
+    <string name="menuEspañol">Español</string>
 
 </resources>

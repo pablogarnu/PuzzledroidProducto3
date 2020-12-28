@@ -32,7 +32,9 @@ public class moveGridView extends GridView {
     private Puzzle_view mypz;
     private SoundPool soundPool;
     private int sounditem;
-
+    private String msjganar;
+    private String msjRegistroJugada;
+    private String msjContinuaJugando;
 
     /*
     * Constructores heredados a implementar
@@ -137,6 +139,18 @@ public class moveGridView extends GridView {
         return gestureDetector.onTouchEvent(event);
     }
 
+    public String getMsjganar() {
+        msjganar=getResources().getString(R.string.msjganaste);
+        return msjganar;
+    }
 
+    public String getMsjRegistroJugada() {
+        msjRegistroJugada=getResources().getString(R.string.msjregistrojugada);
+        return msjRegistroJugada;
+    }
 
+    public String getMsjContinuaJugando() {
+        msjContinuaJugando=getResources().getString(R.string.msjregresarotrajugada);
+        return msjContinuaJugando;
+    }
 } // End class moveGridView

@@ -8,6 +8,7 @@ package com.example.puzzledroid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -33,12 +34,15 @@ public class ListarRecords extends AppCompatActivity {
     ArrayList<String> informjugada;
     ArrayList<Jugada> listajugadas;
     ArrayList<Jugador> listajugadores;
+    String idioma;
 
     ConexionSQLite conexion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent=getIntent();
+        idioma=intent.getExtras().getString("idioma");
         setContentView(R.layout.activity_listar_records);
 
         conexion=new ConexionSQLite(getApplicationContext(),"bd_jugadores",null,1);
@@ -117,6 +121,9 @@ public class ListarRecords extends AppCompatActivity {
 
     private void obtenerLista() {
 
+        String nickname= getResources().getString(R.string.listanickname);
+        String puntos=getResources().getString(R.string.listapuntos);
+        String fecha=getResources().getString(R.string.listafecha);
         informjugada=new ArrayList<String>();
         int numItemsMostrados;
         if(listajugadas.size()>10){
@@ -127,8 +134,8 @@ public class ListarRecords extends AppCompatActivity {
 
         for(int i=0;i<numItemsMostrados;i++){
 
-            informjugada.add("\nNickname: "+listajugadores.get(i).getNickname()+"      Puntos: "+listajugadas.get(i).getPuntos()+"\nFecha: "+
-                    listajugadas.get(i).getFecha()+"\n");
+            informjugada.add("\n"+nickname+":"+listajugadores.get(i).getNickname()+"      "+puntos+": "+listajugadas.get(i).getPuntos()+"\n"
+                    +fecha+": "+listajugadas.get(i).getFecha()+"\n");
         }
 
     }// End obtenerLista

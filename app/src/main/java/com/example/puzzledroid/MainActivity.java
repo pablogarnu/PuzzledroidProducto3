@@ -14,17 +14,21 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean serviceBound=false;
     public ArrayList<Audio> playlist;
     public static final String Broadcast_PLAY_NEW_AUDIO="com.example.puzzledroid.PlayNewAudio";
+    private String idioma;
 
 
     @Override
@@ -44,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         loadAudio();
         //playAudio(playlist.get(0).getData());
-
     }
 
 
@@ -55,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
             unbindService(serviceConnection);
             //el servicio está activo
             playerService.stopSelf();
+            playerService.onDestroy();
         }
-        playerService.onDestroy();
     }
 
     /**
@@ -83,8 +87,41 @@ public class MainActivity extends AppCompatActivity {
             if(playlist.size()>0){
                 playAudio(3); //melodia oficial
             }
+        }else if(i==R.id.itemIngles){
+            //pendiente
+            idioma="en";
+            setLocale(idioma);
+
+
+        }
+        else if(i==R.id.itemFrances){
+            //pendiente
+            idioma="fr";
+            setLocale(idioma);
+
+        }
+        else if(i==R.id.itemEspañol){
+            idioma="es";
+            setLocale(idioma);
         }
             return super.onOptionsItemSelected(item);
+    }
+
+
+    /**
+     * Método para cambiar idioma de la app
+     */
+
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, MainActivity.class);
+        finish();
+        startActivity(refresh);
     }
 
     /**
@@ -104,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void activaMultijugador(View view){
         Intent intent=new Intent(MainActivity.this,loginActivity.class);
+        intent.putExtra("idioma",idioma);
         startActivity(intent);
     }
 
@@ -122,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void mostrarListaRecords(View view){
         Intent intent=new Intent(MainActivity.this,ListarRecords.class);
+        intent.putExtra("idioma",idioma);
         startActivity(intent);
     }
 
@@ -138,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
             playerService = binder.getService();
             serviceBound = true;
 
-            Toast.makeText(MainActivity.this, "Servicio vinculado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getResources().getString(R.string.msjServicioVinculado), Toast.LENGTH_SHORT).show();
         } //end onServiceConnected
 
 

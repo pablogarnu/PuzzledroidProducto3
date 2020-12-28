@@ -8,4 +8,13 @@
     <item
         android:id="@+id/item_playlist"
         android:title="@string/item_playlist" />
+    <item
+        android:id="@+id/itemIngles"
+        android:title="@string/menuIngles" />
+    <item
+        android:id="@+id/itemFrances"
+        android:title="@string/menuFrances" />
+    <item
+        android:id="@+id/itemEspañol"
+        android:title="@string/menuEspañol" />
 </menu>
