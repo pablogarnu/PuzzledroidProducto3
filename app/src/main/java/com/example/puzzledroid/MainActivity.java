@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
      */
 
     public boolean onOptionsItemSelected(MenuItem item){
-
         int i=item.getItemId();
         if(i==R.id.item_help){
             //funcion a ejecutar
@@ -91,21 +90,18 @@ public class MainActivity extends AppCompatActivity {
             //pendiente
             idioma="en";
             setLocale(idioma);
-
-
         }
         else if(i==R.id.itemFrances){
             //pendiente
             idioma="fr";
             setLocale(idioma);
-
         }
         else if(i==R.id.itemEspañol){
             idioma="es";
             setLocale(idioma);
         }
             return super.onOptionsItemSelected(item);
-    }
+    } //
 
 
     /**
@@ -122,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         Intent refresh = new Intent(this, MainActivity.class);
         finish();
         startActivity(refresh);
-    }
+    }//end setLocale
 
     /**
      * Método para activar pantalla puzzlelist en modo monojugador

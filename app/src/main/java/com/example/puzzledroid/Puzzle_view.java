@@ -32,6 +32,10 @@ import android.widget.Toast;
 import com.example.puzzledroid.entidades.Jugada;
 import com.example.puzzledroid.entidades.Jugador;
 import com.example.puzzledroid.utilidades.Utilidades;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,6 +44,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import static com.example.puzzledroid.App.CHANNEL_RECORDS_ID;
@@ -77,6 +83,8 @@ public class Puzzle_view extends AppCompatActivity {
 
 
     public static ConexionSQLite conexion;
+    private FirebaseAuth myAuth;
+    private FirebaseUser currentuser;
 
     // crear variable global tipo sounpool
 
@@ -101,6 +109,10 @@ public class Puzzle_view extends AppCompatActivity {
         // Crear notification manager
 
         notificationManager=NotificationManagerCompat.from(this);
+        myAuth = FirebaseAuth.getInstance();
+        currentuser = myAuth.getCurrentUser();
+        mijugador = new Jugador();
+        mijugador.setNickname(currentuser.getUid());
 
 
         try {
@@ -133,6 +145,14 @@ public class Puzzle_view extends AppCompatActivity {
             ArrayList<Jugada> misjugadas = conexion.getListaJugadas();
             Jugada lastjugada = misjugadas.get(misjugadas.size() - 1);
             String contenido = mijugador.getNickname() + " puntos:" + lastjugada.getPuntos();
+
+            if(misjugadas.size()>0){
+                lastjugada = misjugadas.get(misjugadas.size() - 1);
+                contenido = mijugador.getNickname() + " puntos:" + lastjugada.getPuntos();
+            }else{
+                contenido = mijugador.getNickname() + " puntos: ERROR";
+            }
+
             if (isResuelto()) {
                 // crear y mostrar notificacion
                 if (getNewRecord() > record) {
@@ -384,7 +404,7 @@ public class Puzzle_view extends AppCompatActivity {
             //solo podrá moverse hacia abajo y hacia la derecha
             if (direccion.equals(right)) intercambiaPieza(context,posicion,1);
             else if (direccion.equals(down))intercambiaPieza(context,posicion,columnas);
-            else Toast.makeText(context,"Movimiento NO VALIDO",Toast.LENGTH_SHORT).show();
+            else Toast.makeText(context,getResources().getString(R.string.msjmovimnovalido),Toast.LENGTH_SHORT).show();
         }
 
         // Pieza situada en la fila superior y las columnas intermedias de la matriz de piezas
@@ -513,6 +533,13 @@ public class Puzzle_view extends AppCompatActivity {
                 +String.valueOf(duracion)+","+String.valueOf(puntos)+")";
         db.execSQL(insert);
         db.close();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("puntuacion");
+        Map<String, Long> puntuacion = new HashMap<>();
+
+        puntuacion.put(mijugador.getNickname(), puntos);
+        myRef.setValue(puntuacion);
 
     }
 
